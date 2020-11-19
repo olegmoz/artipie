@@ -40,6 +40,7 @@ import com.artipie.http.auth.Authentication;
 import com.artipie.http.auth.Permissions;
 import com.artipie.http.client.ClientSlices;
 import com.artipie.http.client.auth.AuthClientSlice;
+import com.artipie.http.slice.LoggingSlice;
 import com.artipie.repo.ProxyConfig;
 import java.nio.ByteBuffer;
 import java.util.Map;
@@ -151,7 +152,7 @@ public final class DockerProxy implements Slice {
      */
     private static Docker proxy(final ClientSlices slices, final ProxyConfig.Remote remote) {
         final Docker proxy = new ProxyDocker(
-            new AuthClientSlice(slices.https(remote.url()), remote.auth())
+            new AuthClientSlice(new LoggingSlice(slices.https(remote.url())), remote.auth())
         );
         return remote.cache().<Docker>map(
             storage -> new CacheDocker(
