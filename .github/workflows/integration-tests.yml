@@ -1,19 +1,13 @@
 ---
 name: Integation tests
-"on":
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+"on": push
 jobs:
   maven-it:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-        java: [11, 13]
+        java: [11]
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK
